@@ -39,7 +39,7 @@ import timber.log.Timber;
  *
  * @author ypresto
  */
-public class CrashlyticsTree implements Timber.Tree {
+public class CrashlyticsTree extends Timber.Tree {
     private final int mLogPriority;
 
     /**
@@ -53,8 +53,6 @@ public class CrashlyticsTree implements Timber.Tree {
     /**
      * Create instance with minimum log priority to record log to crashlytics.
      *
-     * @param failFastPriority Tree will throw error if priority of log is greater or equal than
-     *                         specified value. Expected to be one of constants from {@link Log}.
      */
     public CrashlyticsTree(int logPriority) {
         // Ensure crashlytics class is available, fail-fast if not available.
@@ -123,5 +121,13 @@ public class CrashlyticsTree implements Timber.Tree {
     public void e(Throwable t, String message, Object... args) {
         Crashlytics.log(message);
         Crashlytics.logException(t);
+    }
+
+    @Override
+    protected void log(int priority, String tag, String message, Throwable t) {
+        Crashlytics.log(priority, tag, message);
+        if (t != null) {
+            Crashlytics.logException(t);
+        }
     }
 }

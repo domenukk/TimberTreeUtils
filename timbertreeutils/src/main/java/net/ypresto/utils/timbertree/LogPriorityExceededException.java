@@ -27,7 +27,7 @@
 package net.ypresto.utils.timbertree;
 
 /**
- * Exception thrown by {@link net.ypresto.utils.timbertree.FailFastTree}.
+ * Exception thrown by {@link FailFastTree}.
  */
 public class LogPriorityExceededException extends RuntimeException {
     private static final String LOG_FORMAT = "Log priority exceeded: actual:%d >= fail-fast:%d";

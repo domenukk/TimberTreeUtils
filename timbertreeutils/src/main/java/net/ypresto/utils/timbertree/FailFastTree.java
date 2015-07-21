@@ -31,12 +31,12 @@ import android.util.Log;
 import timber.log.Timber;
 
 /**
- * An implementation of {@link Timber.Tree} which throws {@link java.lang.Error} when priority of
+ * An implementation of {@link Timber.Tree} which throws {@link Error} when priority of
  * log is exceeded the limit. Useful for developing or testing environment.
  *
  * @author ypresto
  */
-public class FailFastTree implements Timber.Tree {
+public class FailFastTree extends Timber.Tree {
     private final int mFailFastPriority;
 
     /**
@@ -114,5 +114,10 @@ public class FailFastTree implements Timber.Tree {
     @Override
     public void e(Throwable throwable, String s, Object... objects) {
         assertPriority(Log.ERROR, throwable);
+    }
+
+    @Override
+    protected void log(int priority, String tag, String message, Throwable t) {
+        assertPriority(priority, t);
     }
 }
